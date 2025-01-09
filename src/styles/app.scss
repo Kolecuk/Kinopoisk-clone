@@ -1,1 +1,6 @@
-@import 'bootstrap/scss/bootstrap'
+@import 'bootstrap/scss/bootstrap';
+
+@import './wrapper.scss';
+@import './layout.scss';
+@import './navigation.scss';
+@import './search.scss';

@@ -1,9 +1,21 @@
 import { get } from '../utils/client'
-import { filmsEndpoint, filmsSearchEndpoint } from '../config/api'
+import { filmsEndpoint, filmsPopularEndpoint, filmsSearchEndpoint } from '../config/api'
 
 export const requestFilms = async (params) => {
   try {
     const response = await get(filmsEndpoint, { params })
+    return response.data
+  } catch (error) {
+    return {
+      hasError: true,
+      ...error
+    }
+  }
+}
+
+export const requestFilmsPopular = async (params) => {
+  try {
+    const response = await get(filmsPopularEndpoint, { params })
     return response.data
   } catch (error) {
     return {

@@ -12,3 +12,5 @@ export function Home() {
     </>
   )
 }
+
+// TODO: добавить спинеры из bootstrap

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { requestFilms, requestFilmsSearch } from '../services/films'
+import { requestFilms, requestFilmsPopular, requestFilmsSearch } from '../services/films'
 
 const initialState = {
   list: [],
@@ -13,6 +13,18 @@ export const fetchFilms = createAsyncThunk(
   'films/fetchFilms',
   async (params, { rejectWithValue }) => {
     const data = await requestFilms(params)
+
+    if (data.hasError) {
+      return rejectWithValue(data)
+    }
+
+    return data
+  })
+
+export const fetchFilmsPopular = createAsyncThunk(
+  'films/fetchFilmsPopular',
+  async (params, { rejectWithValue }) => {
+    const data = await requestFilmsPopular(params)
 
     if (data.hasError) {
       return rejectWithValue(data)
@@ -48,6 +60,21 @@ export const filmsSlice = createSlice({
         state.pageCount = action.payload.totalPages
       })
       .addCase(fetchFilms.rejected, (state, action) => {
+        state.isLoaded = false
+        // state.error = `${action.error.name}: ${action.error.message}` //если запрос отменен по истечении времени запроса, то надо этот state
+        state.error = `${action.payload.message}: ${action.payload.response.data.message}`
+      })
+
+      .addCase(fetchFilmsPopular.pending, (state) => {
+        state.error = null
+        state.isLoaded = true
+      })
+      .addCase(fetchFilmsPopular.fulfilled, (state, action) => {
+        state.isLoaded = false
+        state.list = action.payload.items
+        state.pageCount = action.payload.totalPages
+      })
+      .addCase(fetchFilmsPopular.rejected, (state, action) => {
         state.isLoaded = false
         // state.error = `${action.error.name}: ${action.error.message}` //если запрос отменен по истечении времени запроса, то надо этот state
         state.error = `${action.payload.message}: ${action.payload.response.data.message}`

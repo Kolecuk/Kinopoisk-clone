@@ -6,6 +6,7 @@ export function Pagination(props) {
 
   function getPath(location, item) {
     if (location.pathname.includes('all')) return `/films/all/${item}`
+    if (location.pathname.includes('popular')) return `/films/popular/${item}`
     if (location.pathname.includes('search')) return `/films/search/${item}`
   }
 

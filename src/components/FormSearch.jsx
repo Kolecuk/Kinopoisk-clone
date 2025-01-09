@@ -29,7 +29,7 @@ export function FormSearch() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="position-relative w-50 mx-2">
+    <form onSubmit={handleSubmit} className="position-relative w-25 mx-2 my-auto">
       <FormField
         ref={searchInputRef}
         label="Поиск"
@@ -52,3 +52,5 @@ export function FormSearch() {
     </form>
   )
 }
+
+// TODO: алерт при пустой строке поиска

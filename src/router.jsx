@@ -4,6 +4,7 @@ import { Home } from './pages/Home'
 import { Film } from './pages/Film'
 import { Films } from './pages/Films'
 import { FilmsAll } from './pages/FilmsAll'
+import { FilmsPopular } from './pages/FilmsPopular'
 import { FilmsFound } from './pages/FilmsFound'
 
 export const router = createBrowserRouter([
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
           {
             path: '/films/all/:currentPage',
             element: <FilmsAll />
+          },
+          {
+            path: '/films/popular/:currentPage',
+            element: <FilmsPopular />
           },
           {
             path: '/films/search/:currentPage',

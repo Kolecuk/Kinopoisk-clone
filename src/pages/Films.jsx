@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Outlet, useParams, useLocation } from 'react-router'
-import { fetchFilms, fetchFilmsSearch } from '../redux/films-slice.js'
+import { fetchFilms, fetchFilmsPopular, fetchFilmsSearch } from '../redux/films-slice.js'
 import { Pagination } from '../components/Pagination.jsx'
 
 export function Films() {
@@ -14,10 +14,13 @@ export function Films() {
     if (location.pathname.includes('all')) {
       dispatch(fetchFilms({ page: currentPage }))
     }
+    if (location.pathname.includes('popular')) {
+      dispatch(fetchFilmsPopular({ page: currentPage }))
+    }
     if (location.pathname.includes('search') && keyword) {
       dispatch(fetchFilmsSearch({ keyword, page: currentPage }))
     }
-  }, [currentPage, dispatch])
+  }, [location, currentPage, dispatch])
 
   if (isLoaded) {
     return <h3>Загрузка...</h3>

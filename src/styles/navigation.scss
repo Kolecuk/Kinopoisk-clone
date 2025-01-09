@@ -1,0 +1,13 @@
+.navigation__link {
+  padding: 0.5rem;
+  color: #ff7700;
+  &:hover {
+    color: #f7b100;
+  }
+  &:focus {
+    color: #f7b100;
+  }
+  &.active {
+    color: #f7b100;
+  }
+}
