@@ -1,5 +1,5 @@
 import { get } from '../utils/client'
-import { filmsEndpoint, filmsPopularEndpoint, filmsSearchEndpoint } from '../config/api'
+import { filmsEndpoint, filmsPopularEndpoint, filmsSearchEndpoint, filmsFilterEndpoint } from '../config/api'
 
 export const requestFilms = async (params) => {
   try {
@@ -28,6 +28,18 @@ export const requestFilmsPopular = async (params) => {
 export const requestFilmsSearch = async (params) => {
   try {
     const response = await get(filmsSearchEndpoint, { params })
+    return response.data
+  } catch (error) {
+    return {
+      hasError: true,
+      ...error
+    }
+  }
+}
+
+export const requestFilmsFilter = async (params) => {
+  try {
+    const response = await get(filmsFilterEndpoint, { params })
     return response.data
   } catch (error) {
     return {

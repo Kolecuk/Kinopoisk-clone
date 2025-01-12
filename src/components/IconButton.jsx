@@ -11,14 +11,24 @@ export function IconButton(props) {
       case 'search':
         return renderButton(search, 'search button', props.handleClick)
       case 'filter':
-        return renderButton(filter, 'filter button', props.handleClick)
+        return renderButton(filter, 'filter button')
     }
   }
 
   const renderButton = (srcPath, altInfo, handleClick) => {
-    return <button type={props.type} className={props.className} onClick={handleClick}>
-      <Image src={srcPath} alt={altInfo} />
-    </button>
+    return (
+      <button
+        type={props.type}
+        className={props.className}
+        onClick={handleClick}
+        data-bs-dismiss={props.dataBsDismiss}
+        data-bs-toggle={props.dataBsToggle}
+        data-bs-target={props.dataBsTarget}
+        aria-controls={props.ariaControls}
+      >
+        <Image src={srcPath} alt={altInfo} />
+      </button>
+    )
   }
 
   return (

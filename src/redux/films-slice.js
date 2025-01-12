@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { requestFilms, requestFilmsPopular, requestFilmsSearch } from '../services/films'
+import { requestFilms, requestFilmsPopular, requestFilmsSearch, requestFilmsFilter } from '../services/films'
+import { act } from 'react'
 
 const initialState = {
   list: [],
+  filter: null,
   pageCount: null,
   keyword: null,
   isLoaded: false,
@@ -37,6 +39,18 @@ export const fetchFilmsSearch = createAsyncThunk(
   'films/fetchFilmsSearch',
   async (params, { rejectWithValue }) => {
     const data = await requestFilmsSearch(params)
+
+    if (data.hasError) {
+      return rejectWithValue(data)
+    }
+
+    return data
+  })
+
+export const fetchFilmsFilter = createAsyncThunk(
+  'films/fetchFilmsFilter',
+  async (params, { rejectWithValue }) => {
+    const data = await requestFilmsFilter(params)
 
     if (data.hasError) {
       return rejectWithValue(data)
@@ -100,6 +114,30 @@ export const filmsSlice = createSlice({
         // state.error = `${action.error.name}: ${action.error.message}` //если запрос отменен по истечении времени запроса, то надо этот state
         state.error = `${action.payload.message}: ${action.payload.response.data.message}`
         state.keyword = action.payload.config.params.keyword //необходимо, чтобы при переходе на другую страницу
+        // после ошибки в запросе можно было вернуться на другие страницы пагинациейю.
+        // Если не отображать пагинацию, то это не нужно
+      })
+
+      .addCase(fetchFilmsFilter.pending, (state) => {
+        state.error = null
+        state.isLoaded = true
+        state.filter = null //необходимо для исключения повторного запроса.
+        // Повторный запрос выполняется в pages/Films, когда происходит новый поиск не с 1-ой страницы старого поиска.
+        // С начала отправляется запрос из components/FormSearch с keyword: 'Б', при этом меняется url на /search/:currentPage
+        // Следовательно, изменился currentPage и отправляется второй запрос из pages/Films с предыдущим (keyword: 'А').
+        // В результате отрисовывается страница от 2-го запроса.
+      })
+      .addCase(fetchFilmsFilter.fulfilled, (state, action) => {
+        state.isLoaded = false
+        state.list = action.payload.items
+        state.filter = action.meta.arg
+        state.pageCount = action.payload.totalPages
+      })
+      .addCase(fetchFilmsFilter.rejected, (state, action) => {
+        state.isLoaded = false
+        // state.error = `${action.error.name}: ${action.error.message}` //если запрос отменен по истечении времени запроса, то надо этот state
+        state.error = `${action.payload.message}: ${action.payload.response.data.message}`
+        // state.keyword = action.payload.config.params.keyword //необходимо, чтобы при переходе на другую страницу
         // после ошибки в запросе можно было вернуться на другие страницы пагинациейю.
         // Если не отображать пагинацию, то это не нужно
       })

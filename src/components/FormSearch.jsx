@@ -38,11 +38,18 @@ export function FormSearch() {
         placeholder="Введите название фильма ..."
         value={search}
         onChange={handleChangeSearch}
-        id="search" />
+        id="search"
+        classWrapper="row"
+        classLabel="form-label text-center text-light visually-hidden"
+        classInput="form-control search__input"
+      />
       <IconButton
         type="button"
         icon="filter"
         className="position-absolute bottom-0 end-0 btn btn-outline-none p-1 me-5"
+        dataBsToggle="offcanvas"
+        dataBsTarget="#offcanvasRight"
+        ariaControls="offcanvasRight"
       />
       <IconButton
         type="submit"
