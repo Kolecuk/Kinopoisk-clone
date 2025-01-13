@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { fetchFilm } from '../redux/film-slice.js'
-import { Article } from '../components/Article.jsx'
+import { fetchFilm } from '../redux/film-slice'
+import { Article } from '../components/Article'
 
 export function Film() {
   const dispatch = useDispatch()
@@ -14,7 +14,13 @@ export function Film() {
   }, [kinopoiskId, dispatch])
 
   if (isLoaded) {
-    return <h3>Загрузка...</h3>
+    return (
+      <div className="d-flex justify-content-center my-5">
+        <div className="spinner-border text-warning" role="status">
+          <span className="visually-hidden">Загрузка...</span>
+        </div>
+      </div>
+    )
   }
 
   if (error) {

@@ -123,9 +123,6 @@ export const filmsSlice = createSlice({
         state.isLoaded = false
         // state.error = `${action.error.name}: ${action.error.message}` //если запрос отменен по истечении времени запроса, то надо этот state
         state.error = `${action.payload.message}: ${action.payload.response.data.message}`
-        state.keyword = action.payload.config.params.keyword //необходимо, чтобы при переходе на другую страницу
-        // после ошибки в запросе можно было вернуться на другие страницы пагинациейю.
-        // Если не отображать пагинацию, то это не нужно
       })
 
       .addCase(fetchFilmsFilter.pending, (state) => {
@@ -133,7 +130,7 @@ export const filmsSlice = createSlice({
         state.isLoaded = true
         state.filter = null //необходимо для исключения повторного запроса.
         // Повторный запрос выполняется в pages/Films, когда происходит новый поиск не с 1-ой страницы старого поиска.
-        // С начала отправляется запрос из components/FormSearch с keyword: 'Б', при этом меняется url на /search/:currentPage
+        // С начала отправляется запрос из components/FormFilter с keyword: 'Б', при этом меняется url на /search/:currentPage
         // Следовательно, изменился currentPage и отправляется второй запрос из pages/Films с предыдущим (keyword: 'А').
         // В результате отрисовывается страница от 2-го запроса.
       })
@@ -147,9 +144,6 @@ export const filmsSlice = createSlice({
         state.isLoaded = false
         // state.error = `${action.error.name}: ${action.error.message}` //если запрос отменен по истечении времени запроса, то надо этот state
         state.error = `${action.payload.message}: ${action.payload.response.data.message}`
-        // state.keyword = action.payload.config.params.keyword //необходимо, чтобы при переходе на другую страницу
-        // после ошибки в запросе можно было вернуться на другие страницы пагинациейю.
-        // Если не отображать пагинацию, то это не нужно
       })
   }
 })

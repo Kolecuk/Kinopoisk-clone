@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
-import { changeFavorites } from '../redux/films-slice.js'
-import { Image } from './Image.jsx'
-import { FilmTitle } from './FilmTitle.jsx'
-import { FilmText } from './FilmText.jsx'
-import { IconButton } from './IconButton.jsx'
+import { changeFavorites } from '../redux/films-slice'
+import { Image } from './Image'
+import { FilmTitle } from './FilmTitle'
+import { FilmText } from './FilmText'
+import { IconButton } from './IconButton'
 
 export function FilmCardSmall(props) {
   const dispatch = useDispatch()

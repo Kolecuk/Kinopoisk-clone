@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { fetchFilmsFilter } from '../redux/films-slice'
-import { FormField } from './FormField'
+import { FormFieldInput } from './FormFieldInput'
 import { FormFieldSelect } from './FormFieldSelect'
 import { Button } from './Button'
 
@@ -61,7 +61,7 @@ export function FormFilter() {
         }}
       </FormFieldSelect>
 
-      <FormField
+      <FormFieldInput
         label="Ключевое слово"
         name="keyword"
         type="text"
@@ -73,9 +73,9 @@ export function FormFilter() {
         {{
           ...register("keyword")
         }}
-      </FormField>
+      </FormFieldInput>
 
-      <FormField
+      <FormFieldInput
         label="Рейтинг фильма от"
         name="ratingFrom"
         type="text"
@@ -93,9 +93,9 @@ export function FormFilter() {
             },
           })
         }}
-      </FormField>
+      </FormFieldInput>
 
-      <FormField
+      <FormFieldInput
         label="Рейтинг фильма до"
         name="ratingTo"
         type="text"
@@ -113,9 +113,9 @@ export function FormFilter() {
             },
           })
         }}
-      </FormField>
+      </FormFieldInput>
 
-      <FormField
+      <FormFieldInput
         label="Год фильма от"
         name="yearFrom"
         type="text"
@@ -133,9 +133,9 @@ export function FormFilter() {
             },
           })
         }}
-      </FormField>
+      </FormFieldInput>
 
-      <FormField
+      <FormFieldInput
         label="Год фильма до"
         name="yearTo"
         type="text"
@@ -153,7 +153,7 @@ export function FormFilter() {
             },
           })
         }}
-      </FormField>
+      </FormFieldInput>
 
       <div className="d-flex justify-content-center mt-5">
         <Button

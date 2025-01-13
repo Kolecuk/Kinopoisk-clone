@@ -1,4 +1,4 @@
-import { FilmCardSmall } from './FilmCardSmall.jsx'
+import { FilmCardSmall } from './FilmCardSmall'
 
 export function FilmsList(props) {
   const renderCard = (films) => {

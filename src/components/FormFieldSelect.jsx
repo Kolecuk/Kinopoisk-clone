@@ -1,5 +1,3 @@
-import '../styles/search.scss'
-
 export function FormFieldSelect(props) {
 
   const renderOption = (obj) => {

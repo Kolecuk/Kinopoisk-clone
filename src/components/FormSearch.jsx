@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { fetchFilmsSearch } from '../redux/films-slice'
-import { FormField } from './FormField'
+import { FormFieldInput } from './FormFieldInput'
 import { IconButton } from './IconButton'
 
 export function FormSearch() {
@@ -10,6 +10,7 @@ export function FormSearch() {
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const searchInputRef = useRef(null)
+  const required = 'required'
 
   useEffect(() => {
     setTimeout(() => {
@@ -30,7 +31,7 @@ export function FormSearch() {
 
   return (
     <form onSubmit={handleSubmit} className="position-relative w-25 mx-2 my-auto">
-      <FormField
+      <FormFieldInput
         ref={searchInputRef}
         label="Поиск"
         name="search"
@@ -42,7 +43,9 @@ export function FormSearch() {
         classWrapper="row"
         classLabel="form-label text-center text-light visually-hidden"
         classInput="form-control search__input"
-      />
+      >
+        {{ required }}
+      </FormFieldInput>
       <IconButton
         type="button"
         icon="filter"
@@ -59,5 +62,3 @@ export function FormSearch() {
     </form>
   )
 }
-
-// TODO: алерт при пустой строке поиска

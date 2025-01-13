@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import '../styles/search.scss'
 
-export const FormField = forwardRef(function FormField(props, ref) {
+export const FormFieldInput = forwardRef(function FormFieldInput(props, ref) {
   const renderError = (error) => {
     if (error) return <p className="text-danger w-50 ms-auto">{error}</p>
   }
