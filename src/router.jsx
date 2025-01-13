@@ -37,11 +37,11 @@ export const router = createBrowserRouter([
             path: '/films/filter/:currentPage',
             element: <FilmsFiltered />
           },
-          {
-            path: '/films/favorite/:currentPage',
-            element: <FilmsFavorites />
-          },
         ]
+      },
+      {
+        path: '/films/favorite/:currentPage',
+        element: <FilmsFavorites />
       },
       {
         path: '/film/:kinopoiskId',

@@ -25,10 +25,6 @@ export function Films() {
     }
   }, [location, currentPage, dispatch])
 
-  if (!films.length) {
-    return <h3>Нет фильмов</h3>
-  }
-
   if (isLoaded) {
     return (
       <div className="d-flex justify-content-center my-5">
@@ -43,6 +39,10 @@ export function Films() {
     return <div>Ошибка! {error}</div>
   }
 
+  if (!films.length) {
+    return <h3>Нет фильмов</h3>
+  }
+
   return (
     <>
       <Outlet />
@@ -50,3 +50,5 @@ export function Films() {
     </>
   )
 }
+
+//TODO: add skelleton
