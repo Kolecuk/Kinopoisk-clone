@@ -1,9 +1,29 @@
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
+import { changeFavorites } from '../redux/films-slice.js'
 import { Image } from './Image.jsx'
 import { FilmTitle } from './FilmTitle.jsx'
 import { FilmText } from './FilmText.jsx'
+import { IconButton } from './IconButton.jsx'
 
 export function FilmCardSmall(props) {
+  const dispatch = useDispatch()
+  const { favorites } = useSelector((state) => state.films)
+  const [icon, setIcon] = useState('isNotFavorite')
+
+  useEffect(() => {
+    if (favorites.find(item => (item.kinopoiskId || item.filmId) === (props.kinopoiskId || props.filmId))) {
+      setIcon('isFavorite')
+    } else {
+      setIcon('isNotFavorite')
+    }
+  }, [favorites])
+
+  const toggleFavorite = () => {
+    dispatch(changeFavorites({ ...props }))
+  }
+
   function renderTitle(nameOriginal, nameEn, nameRu) {
     const name = nameRu || nameOriginal || nameEn
     return (
@@ -35,16 +55,24 @@ export function FilmCardSmall(props) {
   }
 
   return (
-    <Link to={`/film/${props.kinopoiskId || props.filmId}`} className="d-flex p-2 align-items-center link-dark link-underline-opacity-0 border-bottom">
-      <div className="w-25">
-        <Image src={props.posterUrlPreview} alt="film poster" className="p-3 img-fluid" />
-      </div>
-      <div className="d-flex flex-column flex-grow-1">
-        {renderTitle(props.nameOriginal, props.nameEn, props.nameRu)}
-        {renderGenre(props.genres)}
-        {renderCountry(props.countries)}
-        {renderRating(props.ratingKinopoisk)}
-      </div>
-    </Link>
+    <div className="position-relative">
+      <Link to={`/film/${props.kinopoiskId || props.filmId}`} className="d-flex p-2 align-items-center link-dark link-underline-opacity-0 border-bottom">
+        <div className="w-25">
+          <Image src={props.posterUrlPreview} alt="film poster" className="p-3 img-fluid" />
+        </div>
+        <div className="d-flex flex-column flex-grow-1">
+          {renderTitle(props.nameOriginal, props.nameEn, props.nameRu)}
+          {renderGenre(props.genres)}
+          {renderCountry(props.countries)}
+          {renderRating(props.ratingKinopoisk)}
+        </div>
+      </Link>
+      <IconButton
+        type="button"
+        icon={icon}
+        className="btn btn-outline-none p-2 position-absolute end-0 top-50 translate-middle-y"
+        handleClick={toggleFavorite}
+      />
+    </div>
   )
 }

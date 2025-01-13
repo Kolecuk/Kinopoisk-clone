@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { requestFilms, requestFilmsPopular, requestFilmsSearch, requestFilmsFilter } from '../services/films'
-import { act } from 'react'
 
 const initialState = {
   list: [],
+  favorites: [],
   filter: null,
   pageCount: null,
   keyword: null,
@@ -62,6 +62,16 @@ export const fetchFilmsFilter = createAsyncThunk(
 export const filmsSlice = createSlice({
   name: 'films',
   initialState,
+  reducers: {
+    changeFavorites: (state, action) => {
+      const film = action.payload
+      if (state.favorites.find(item => (item.kinopoiskId || item.filmId) === (film.kinopoiskId || film.filmId))) {
+        state.favorites = state.favorites.filter(item => (item.kinopoiskId || item.filmId) !== (film.kinopoiskId || film.filmId))
+      } else {
+        state.favorites.push(film)
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFilms.pending, (state) => {
@@ -143,6 +153,8 @@ export const filmsSlice = createSlice({
       })
   }
 })
+
+export const { addToFavorites, deleteFromFavorites, changeFavorites } = filmsSlice.actions
 
 export const filmsReducer = filmsSlice.reducer
 

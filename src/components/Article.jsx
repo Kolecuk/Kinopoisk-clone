@@ -1,10 +1,28 @@
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeFavorites } from '../redux/films-slice.js'
 import { Image } from './Image.jsx'
 import { FilmTitle } from './FilmTitle.jsx'
 import { FilmText } from './FilmText.jsx'
+import { IconButton } from './IconButton.jsx'
 
 export function Article() {
+  const dispatch = useDispatch()
   const { data } = useSelector((state) => state.film)
+  const { favorites } = useSelector((state) => state.films)
+  const [icon, setIcon] = useState('isNotFavorite')
+
+  useEffect(() => {
+    if (favorites.find(item => (item.kinopoiskId || item.filmId) === (data.kinopoiskId || data.filmId))) {
+      setIcon('isFavorite')
+    } else {
+      setIcon('isNotFavorite')
+    }
+  }, [favorites])
+
+  const toggleFavorite = () => {
+    dispatch(changeFavorites(data))
+  }
 
   function renderTitle(nameOriginal, nameEn, nameRu) {
     const name = nameRu || nameOriginal || nameEn
@@ -45,7 +63,7 @@ export function Article() {
 
   return (
     <article key={data.kinopoiskId} className="d-flex flex-column">
-      <div className="d-flex p-2 align-items-center">
+      <div className="position-relative d-flex p-2 align-items-center">
         <div className="w-25">
           <Image src={data.posterUrl} alt="film poster" className="p-4 img-fluid" />
         </div>
@@ -55,6 +73,12 @@ export function Article() {
           {renderCountry(data.countries)}
           {renderRating(data.ratingKinopoisk)}
         </div>
+        <IconButton
+          type="button"
+          icon={icon}
+          className="btn btn-outline-none p-2 position-absolute end-0 top-50 translate-middle-y"
+          handleClick={toggleFavorite}
+        />
       </div>
       {renderDescription(data.description)}
     </article>

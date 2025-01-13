@@ -9,6 +9,7 @@ export function Pagination(props) {
     if (location.pathname.includes('popular')) return `/films/popular/${item}`
     if (location.pathname.includes('search')) return `/films/search/${item}`
     if (location.pathname.includes('filter')) return `/films/filter/${item}`
+    if (location.pathname.includes('favorite')) return `/films/favorite/${item}`
   }
 
   function renderPaginationItems() {
@@ -42,3 +43,5 @@ export function Pagination(props) {
     </>
   )
 }
+
+//TODO: delete or repair pagination on FavoritePage

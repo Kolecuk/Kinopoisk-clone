@@ -6,9 +6,11 @@ export function Navigation() {
 
   let allLinkClassName = 'nav-link navigation__link'
   let popularLinkClassName = 'nav-link navigation__link'
+  let favoriteLinkClassName = 'nav-link navigation__link'
 
   if (location.pathname.includes('all')) allLinkClassName += ' active'
   if (location.pathname.includes('popular')) popularLinkClassName += ' active'
+  if (location.pathname.includes('favorite')) favoriteLinkClassName += ' active'
 
   return (
     <nav className="d-flex align-items-center">
@@ -18,6 +20,9 @@ export function Navigation() {
         </li>
         <li className="nav-item">
           <Link className={popularLinkClassName} to="/films/popular/1">Популярное</Link >
+        </li>
+        <li className="nav-item">
+          <Link className={favoriteLinkClassName} to="/films/favorite/1">Избранное</Link >
         </li>
       </ul>
     </nav>

@@ -2,6 +2,8 @@ import { Image } from './Image'
 import logo from '../assets/logo.svg'
 import search from '../assets/search.svg'
 import filter from '../assets/filter.svg'
+import isFavorite from '../assets/isFavorite.svg'
+import isNotFavorite from '../assets/isNotFavorite.svg'
 
 export function IconButton(props) {
   const chooseButton = (icon) => {
@@ -9,9 +11,13 @@ export function IconButton(props) {
       case 'logo':
         return renderButton(logo, 'logo button')
       case 'search':
-        return renderButton(search, 'search button', props.handleClick)
+        return renderButton(search, 'search button')
       case 'filter':
         return renderButton(filter, 'filter button')
+      case 'isFavorite':
+        return renderButton(isFavorite, 'favorite button', props.handleClick)
+      case 'isNotFavorite':
+        return renderButton(isNotFavorite, 'favorite button', props.handleClick)
     }
   }
 
